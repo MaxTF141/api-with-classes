@@ -151,7 +151,7 @@ class Product {
     fetchProducts(req, res) {
         const strQry = `SELECT id, prodName, prodDescription, 
         levels, prodPrice, prodQuantity, imgURL
-        FROM products;`;
+        FROM Products;`;
         db.query(strQry, (err, results)=> {
             if(err) throw err;
             res.status(200).json({results: results})
@@ -160,7 +160,7 @@ class Product {
     fetchProduct(req, res) {
         const strQry = `SELECT id, prodName, prodDescription, 
         levels, prodPrice, prodQuantity, imgURL
-        FROM products
+        FROM Products
         WHERE id = ?;`;
         db.query(strQry, [req.params.id], (err, results)=> {
             if(err) throw err;
@@ -169,13 +169,13 @@ class Product {
 
     }
     addProduct(req, res) {
+        const data = req.body
         const strQry = 
         `
         INSERT INTO Products
         SET ?;
         `;
-        db.query(strQry,[req.body],
-            (err)=> {
+        db.query(strQry,[data], (err)=> {
                 if(err){
                     res.status(400).json({err: "Unable to insert a new record."});
                 }else {
